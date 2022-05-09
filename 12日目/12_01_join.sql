@@ -9,33 +9,33 @@ SELECT * FROM employees;
 SELECT * FROM departments;
 
 
--- @’Êí‚ÌJOIN
+-- ã€€é€šå¸¸ã®JOIN
 SELECT * FROM employees AS emp
 INNER JOIN departments AS dt 
 ON emp.department_id = dt.id;
 
 
--- @“Á’è‚ÌƒJƒ‰ƒ€‚ğæ‚èo‚·
+-- ã€€ç‰¹å®šã®ã‚«ãƒ©ãƒ ã‚’å–ã‚Šå‡ºã™
 SELECT emp.id, emp.first_name, emp.last_name, dt.id AS department_id, dt.name AS department_name
 FROM employees AS emp
 INNER JOIN departments AS dt 
 ON emp.department_id = dt.id;
 
 
--- •¡”‚ÌƒŒƒR[ƒh‚Å•R‚Ã‚¯‚é
+-- è¤‡æ•°ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ã§ç´ã¥ã‘ã‚‹
 SELECT * FROM students AS std
 INNER JOIN 
  users AS usr
 ON std.first_name = usr.first_name AND std.last_name = usr.last_name;
 
--- = ˆÈŠO‚Å•R‚Ã‚¯‚é
+-- = ä»¥å¤–ã§ç´ã¥ã‘ã‚‹
 SELECT * FROM employees AS emp
 INNER JOIN
     students AS std
  ON emp.id < std.id;
  
 -- LEFT JOIN
-SELECT emp.id, emp.first_name, emp.last_name, COALESCE(dt.id, "ŠY“–‚È‚µ") AS department_id, dt.name AS department_name
+SELECT emp.id, emp.first_name, emp.last_name, COALESCE(dt.id, "è©²å½“ãªã—") AS department_id, dt.name AS department_name
 FROM employees AS emp
 LEFT JOIN departments AS dt 
 ON emp.department_id = dt.id;
@@ -59,7 +59,7 @@ classes AS cs
 ON enr.class_id = cs.id;
 
 
--- FULL JOIN(—¼•û‚©‚çæ‚èo‚µ‚ÄAæ“¾‚Å‚«‚È‚¢‚à‚Ì‚ÍNULL)
+-- FULL JOIN(ä¸¡æ–¹ã‹ã‚‰å–ã‚Šå‡ºã—ã¦ã€å–å¾—ã§ããªã„ã‚‚ã®ã¯NULL)
 SELECT * FROM students AS std
 LEFT JOIN enrollments AS enr
 ON std.id = enr.student_id
@@ -75,8 +75,8 @@ classes AS cs
 ON enr.class_id = cs.id;
 
 
--- customers, orders, items, stores ‚ğ•R‚Ã‚¯‚é(INNER JOIN)
--- customers.id‚Å•À‚Ñ‘Ö‚¦‚é(ORDER BY)
+-- customers, orders, items, stores ã‚’ç´ã¥ã‘ã‚‹(INNER JOIN)
+-- customers.idã§ä¸¦ã³æ›¿ãˆã‚‹(ORDER BY)
 SELECT
    ct.id, ct.last_name, od.item_id, od.order_amount, od.order_price, od.order_date, it.name, st.name
 FROM
@@ -89,9 +89,9 @@ INNER JOIN stores AS st
 ON it.store_id = st.id
 ORDER BY ct.id;
 
--- customers, orders, items, stores ‚ğ•R‚Ã‚¯‚é(INNER JOIN)
--- customers.id‚Å•À‚Ñ‘Ö‚¦‚é(ORDER BY)
--- customers .id‚ª10‚ÅAorders.order_date‚ª 2020-08-01‚æ‚è‚ ‚Æ‚Éi‚è‚Ş(WHERE)
+-- customers, orders, items, stores ã‚’ç´ã¥ã‘ã‚‹(INNER JOIN)
+-- customers.idã§ä¸¦ã³æ›¿ãˆã‚‹(ORDER BY)
+-- customers .idãŒ10ã§ã€orders.order_dateãŒ 2020-08-01ã‚ˆã‚Šã‚ã¨ã«çµã‚Šè¾¼ã‚€(WHERE)
 SELECT
    ct.id, ct.last_name, od.item_id, od.order_amount, od.order_price, od.order_date, it.name, st.name
 FROM
@@ -106,7 +106,7 @@ WHERE ct.id = 10 AND od.order_date > "2020-08-01"
 ORDER BY ct.id;
 
 
--- ƒTƒuƒNƒGƒŠ
+-- ã‚µãƒ–ã‚¯ã‚¨ãƒª
 
 SELECT
    ct.id, ct.last_name, od.item_id, od.order_amount, od.order_price, od.order_date, it.name, st.name
@@ -121,7 +121,7 @@ ON it.store_id = st.id
 ORDER BY ct.id;
 
 
--- GROUP BY ‚Ì•R‚Ã‚¯
+-- GROUP BY ã®ç´ã¥ã‘
 SELECT * FROM customers AS ct
 INNER JOIN
      (SELECT customer_id, SUM(order_amount * order_price) AS summary_price
@@ -132,13 +132,13 @@ ORDER BY ct.age
 LIMIT 5;
 
 
--- SELF JOIN(©ŒÈŒ‹‡)
+-- SELF JOIN(è‡ªå·±çµåˆ)
 
 SELECT
-    CONCAT(emp1.last_name, emp1.first_name) AS "•”‰º‚Ì–¼‘O", 
-    emp1.age AS "•”‰º‚Ì”N—î",
-    COALESCE(CONCAT(emp2.last_name, emp2.first_name), "ŠY“–‚È‚µ") AS "ãi‚Ì–¼‘O",
-    emp2.age AS "ãi‚Ì”N—î"
+    CONCAT(emp1.last_name, emp1.first_name) AS "éƒ¨ä¸‹ã®åå‰", 
+    emp1.age AS "éƒ¨ä¸‹ã®å¹´é½¢",
+    COALESCE(CONCAT(emp2.last_name, emp2.first_name), "è©²å½“ãªã—") AS "ä¸Šå¸ã®åå‰",
+    emp2.age AS "ä¸Šå¸ã®å¹´é½¢"
 FROM employees AS emp1
 LEFT JOIN employees AS emp2
 ON emp1.manager_id  = emp2.id;
@@ -155,13 +155,13 @@ CROSS JOIN employees AS emp2
 ON emp1.id < emp2.id;
 
 
--- ŒvZŒ‹‰Ê‚ÆCASE‚Å•R‚Ã‚¯
+-- è¨ˆç®—çµæœã¨CASEã§ç´ã¥ã‘
 SELECT
 *,
 CASE
-    WHEN cs.age > summary_customers.avg_age THEN "Z"
-    ELSE "~"
-END AS "•½‹Ï”N—î‚æ‚è‚à”N—î‚ª‚‚¢‚©"
+    WHEN cs.age > summary_customers.avg_age THEN "ã€‡"
+    ELSE "Ã—"
+END AS "å¹³å‡å¹´é½¢ã‚ˆã‚Šã‚‚å¹´é½¢ãŒé«˜ã„ã‹"
 FROM customers AS cs
 CROSS JOIN(
 SELECT AVG(age) AS avg_age FROM customers
@@ -173,12 +173,12 @@ emp.id,
 AVG(payment),
 summary.avg_payment,
 CASE
-    WHEN AVG(payment) >= summary.avg_payment THEN "Z"
-    ELSE "~"
-END AS "•½‹ÏŒûˆÈã‚©"
+    WHEN AVG(payment) >= summary.avg_payment THEN "ã€‡"
+    ELSE "Ã—"
+END AS "å¹³å‡æœˆåä»¥ä¸Šã‹"
 FROM employees AS emp
 INNER JOIN salaries AS sa
 ON emp.id = sa.employee_id 
 CROSS JOIN
 (SELECT AVG(payment) AS avg_payment FROM salaries) AS summary
-GROUP BY emp.id;
+GROUP BY emp.id, summary.avg_payment;
